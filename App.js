@@ -27,7 +27,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Drug">
-        <Stack.Screen name="Drug" component={Drug}/>
+        <Stack.Screen name="Drug" component={Drug} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
