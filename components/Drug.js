@@ -23,9 +23,9 @@ export default function Drug() {
 
         const [index, setIndex] = React.useState(0);
         const [routes] = React.useState([
-            { key: 'music', title: 'Music', icon: 'queue-music' },
-            { key: 'albums', title: 'Albums', icon: 'album' },
-            { key: 'recents', title: 'Recents', icon: 'history' },
+            { key: 'music', title: 'Home', icon: 'home' },
+            { key: 'albums', title: 'Calendar', icon: 'calendar' },
+            { key: 'recents', title: 'Reminder', icon: 'alarm' },
         ]);
 
         const renderScene = BottomNavigation.SceneMap({
@@ -37,12 +37,14 @@ export default function Drug() {
         return(
             <View style={styles.screen}>
                 <Appbar.Header>
-                    <Appbar.Content title={datas && datas[0].name}/>
+                    <Appbar.Content title="Patient Name Goes Here"/>
                 </Appbar.Header>
                 <View style={styles.view}>{datas && datas.map(data => <View>
+                    <Text style={styles.text}>Instruction : TAKE BY MOUTH AFTER EVERY MEAL</Text>
                     <Text style={styles.text}>Drug Name : {data.name}</Text>
                     <Text style={styles.text}>Drug Use : {data.use}</Text>
                     <Text style={styles.text}>Possible Side Effects : {data.side_effect}</Text>
+                    <Button>Learn More</Button>
                     </View>)}
                 </View>
                 <View style={styles.menu}>
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 25,
+        margin: 25,
         textAlign: 'center',
     },
     menu: {
