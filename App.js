@@ -2,8 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import firebase from 'firebase';
-import 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
 import Drug from './components/Drug';
 
 const firebaseConfig = {
@@ -16,13 +15,11 @@ const firebaseConfig = {
   measurementId: "G-FPGW1Y4NC2"
 };
 
+const app = initializeApp(firebaseConfig);
+
 const Stack = createStackNavigator();
 
 export default function App() {
-
-  if(firebase.apps.length === 0){
-    firebase.initializeApp(firebaseConfig);
-  }
 
   return (
     <NavigationContainer>

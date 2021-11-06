@@ -2,13 +2,24 @@ import React from 'react';
 import { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Appbar, Button, BottomNavigation } from 'react-native-paper';
-import firebase from 'firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBBVtHwzXobEwmriaUL1RRyi_HkliYK81w",
+    authDomain: "test-1ae02.firebaseapp.com",
+    projectId: "test-1ae02",
+    storageBucket: "test-1ae02.appspot.com",
+    messagingSenderId: "656499918293",
+    appId: "1:656499918293:web:775d162be96efc723d295c"
+  };
+  
+const app = initializeApp(firebaseConfig);
+const db = getFirestore();
 
 export default function Drug() {
-
-    const firestore = firebase.firestore();
 
     const MusicRoute = () => <Text></Text>;
 
@@ -17,9 +28,13 @@ export default function Drug() {
     const RecentsRoute = () => <Text></Text>;
 
     function Drug(){
-        const drugs = firestore.collection('drugs');
-        const query = drugs.orderBy('name').limit(1);
-        const [datas] = useCollectionData(query, {name: 'arcabose'});
+
+        async function getData(){
+            const querySnapshot = await getDocs(collection(db, "drug"));
+            querySnapshot.forEach((doc) => {
+            alert(`${doc.id} => ${doc.data().name}`);
+            });
+          }
 
         const [index, setIndex] = React.useState(0);
         const [routes] = React.useState([
@@ -39,14 +54,6 @@ export default function Drug() {
                 <Appbar.Header>
                     <Appbar.Content title="Patient Name Goes Here"/>
                 </Appbar.Header>
-                <View style={styles.view}>{datas && datas.map(data => <View>
-                    <Text style={styles.text}>Instruction : TAKE BY MOUTH AFTER EVERY MEAL</Text>
-                    <Text style={styles.text}>Drug Name : {data.name}</Text>
-                    <Text style={styles.text}>Drug Use : {data.use}</Text>
-                    <Text style={styles.text}>Possible Side Effects : {data.side_effect}</Text>
-                    <Button>Learn More</Button>
-                    </View>)}
-                </View>
                 <View style={styles.menu}>
                     <BottomNavigation
                     navigationState={{ index, routes }}
